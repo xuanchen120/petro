@@ -43,9 +43,6 @@ class BaseClient
     public function setSign($body)
     {
         $this->verifyCode = md5($body);
-        $this->header     = array_merge($this->header, [
-        ]);
-
         return $this;
     }
 

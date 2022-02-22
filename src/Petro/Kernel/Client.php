@@ -1,11 +1,11 @@
 <?php
 
-namespace XuanChen\CouponAssemble\Kernel;
+namespace XuanChen\Petro\Kernel;
 
 use Exception;
 use GuzzleHttp\Client as Guzzle;
-use XuanChen\CouponAssemble\Exceptions\CouponException;
-use XuanChen\CouponAssemble\Kernel\Support\RpcRequest;
+use XuanChen\Petro\Exceptions\CouponException;
+use XuanChen\Petro\Kernel\Support\RpcRequest;
 
 class Client
 {

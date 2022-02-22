@@ -1,6 +1,6 @@
 <?php
 
-namespace XuanChen\CouponAssemble\Kernel;
+namespace XuanChen\Petro\Kernel;
 
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;

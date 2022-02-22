@@ -1,6 +1,6 @@
 <?php
 
-namespace XuanChen\CouponAssemble;
+namespace XuanChen\Petro;
 
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 
@@ -16,7 +16,9 @@ class ServiceProvider extends LaravelServiceProvider
     {
 
         if ($this->app->runningInConsole()) {
-            $this->publishes([__DIR__.'/config.php' => config_path('coupon-assemble.php')], 'coupon-assemble');
+            $this->publishes([__DIR__.'/config.php' => config_path('petro.php')], 'petro');
+            $this->loadMigrationsFrom(__DIR__.'/../database/migrations/');
+
         }
     }
 
@@ -28,6 +30,6 @@ class ServiceProvider extends LaravelServiceProvider
      */
     public function register(): void
     {
-        $this->mergeConfigFrom(__DIR__.'/config.php', 'coupon-assemble');
+        $this->mergeConfigFrom(__DIR__.'/config.php', 'petro');
     }
 }

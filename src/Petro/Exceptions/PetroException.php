@@ -1,9 +1,9 @@
 <?php
 
-namespace XuanChen\CouponAssemble\Exceptions;
+namespace XuanChen\Petro\Exceptions;
 
 use Exception;
 
-class CouponException extends Exception
+class PetroException extends Exception
 {
 }
