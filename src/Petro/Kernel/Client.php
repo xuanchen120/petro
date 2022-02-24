@@ -5,7 +5,9 @@ namespace XuanChen\Petro\Kernel;
 use Exception;
 use GuzzleHttp\Client as Guzzle;
 use XuanChen\Petro\Exceptions\CouponException;
+use XuanChen\Petro\Exceptions\PetroException;
 use XuanChen\Petro\Kernel\Support\RpcRequest;
+use function PHPUnit\Framework\isNull;
 
 class Client
 {
@@ -14,6 +16,12 @@ class Client
     protected $config;
 
     public $client;
+
+    public $postData;
+
+    public $resData;
+
+    public $response;
 
     public function __construct($app)
     {
@@ -45,19 +53,34 @@ class Client
 
     protected function post(RpcRequest $body)
     {
-        dd($body->getParams());
         try {
-            $response = $this->client->post('', $body->getParams());
-            $resJson  = json_decode($response->getBody()->getContents(), true);
-            dd($resJson);
+            $this->postData = $body->getParams();
+            $this->response = $this->client->post('', [
+                'body'    => json_encode($this->postData, JSON_UNESCAPED_SLASHES),
+                'headers' => [
+                    'Content-Type' => 'application/json;charset=utf-8',
+                    'accept'       => 'application/json;charset=utf-8',
+                ],
+            ]);
 
-            if ($resJson['error']) {
-                throw new CouponException($resJson['error']);
+            $this->resData = json_decode($this->response->getBody()->getContents(), true);
+
+            if (is_null($this->resData)) {
+                throw new PetroException('未获取到返回数据');
             }
 
-            return $resJson['result'];
+            if (isset($this->resData['_error'])) {
+                throw new PetroException($this->resData['_error']);
+            }
+
+            $this->app->log->setData([
+                'in_source'  => $this->postData,
+                'out_source' => $this->resData ?? [$this->response->getBody()->getContents()]
+            ])->start();
+
+            return true;
         } catch (Exception $exception) {
-            throw new CouponException($exception->getMessage());
+            throw new PetroException($exception->getMessage());
         }
     }
 }

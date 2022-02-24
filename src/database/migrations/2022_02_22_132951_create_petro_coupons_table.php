@@ -22,10 +22,8 @@ class CreatePetroCouponsTable extends Migration
             $table->string('requestCode')->comment('电子券请求码');
             $table->string('limitAmount')->comment('便利店金额限制');
             $table->string('oillimitAmount')->comment('油品金额限制');
-            $table->string('oillimitAmount')->comment('油品金额限制');
             $table->string('ttlimitAmount')->comment('总金额限制');
             $table->string('effectiveTime')->comment('生效日期');
-            $table->string('expirdDate')->comment('失效日期');
             $table->string('expirdDate')->comment('失效日期');
             $table->string('isReuse')->comment('是否叠加');
             $table->string('stationLimitName')->comment('加油站限制');

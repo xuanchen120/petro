@@ -7,10 +7,14 @@ use Pimple\Container;
 /**
  * Class Application.
  *
- * @method static Grang\Client Grang
+ * @method static Grant\Client Grant
  * @method static Detail\Client Detail
  * @method static DetailBatch\Client DetailBatch
  * @method static Kernel\Client Client
+ * @method static Log\Client Log
+ * @method static CallBack\Client CallBack
+ * @method static Invalid\Client Invalid
+ * @method static Bill\Client Bill
  */
 class Application extends Container
 {
@@ -20,10 +24,14 @@ class Application extends Container
      * @var array
      */
     protected array $providers = [
-        Grang\ServiceProvider::class,
+        Grant\ServiceProvider::class,
         Detail\ServiceProvider::class,
         DetailBatch\ServiceProvider::class,
         Kernel\ServiceProvider::class,
+        Log\ServiceProvider::class,
+        CallBack\ServiceProvider::class,
+        Invalid\ServiceProvider::class,
+        Bill\ServiceProvider::class,
     ];
 
     /**

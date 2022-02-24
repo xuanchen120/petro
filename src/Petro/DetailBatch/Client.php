@@ -4,29 +4,13 @@ namespace XuanChen\Petro\DetailBatch;
 
 use Exception;
 use GuzzleHttp\Client as Guzzle;
+use XuanChen\Petro\Kernel\BaseClient;
 
-class Client
+class Client extends BaseClient
 {
-    protected $app;
-
-    protected $config;
-
-    public $client;
-
-    public function __construct($app)
+    public function start()
     {
-        $this->app    = $app;
-        $this->config = $app->config;
 
-        $this->client = new Guzzle([
-            'base_uri' => $this->config['base_uri'],
-        ]);
-
-    }
-
-    public function __call($method, $args)
-    {
-        return $this->request($method, ...$args);
     }
 
 }
