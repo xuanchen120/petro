@@ -3,10 +3,8 @@
 namespace XuanChen\Petro\Log;
 
 use Exception;
-use GuzzleHttp\Client as Guzzle;
 use Illuminate\Support\Arr;
 use XuanChen\Petro\Exceptions\PetroException;
-use XuanChen\Petro\Kernel\BaseClient;
 use XuanChen\Petro\Models\PetroLog;
 
 class Client
@@ -24,7 +22,7 @@ class Client
      */
     public function start()
     {
-//        try {
+        try {
             $this->source = PetroLog::create([
                 'type'       => Arr::get($this->params, 'in_source.sendMessage.head.strActionType', ''),
                 'in_source'  => Arr::get($this->params, 'in_source', ''),
@@ -32,9 +30,9 @@ class Client
             ]);
 
             return $this;
-//        } catch (\PetroException $exception) {
-//            throw new PetroException($exception->getMessage());
-//        }
+        } catch (PetroException $exception) {
+            throw new PetroException($exception->getMessage());
+        }
 
     }
 
