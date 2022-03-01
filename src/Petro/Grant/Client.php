@@ -59,7 +59,7 @@ class Client extends BaseClient
         } catch (\Exception $e) {
             $this->app->log->setData([
                 'in_source'  => $this->app->client->postData,
-                'out_source' => [$e->getMessage()]
+                'out_source' => ['error' => $e->getMessage()]
             ])->start();
 
             return $e->getMessage();

@@ -1,0 +1,130 @@
+<?php
+
+namespace XuanChen\Petro\Controllers\Api;
+
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use XuanChen\Petro;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use App\Api\Controllers\ApiResponse;
+
+class IndexController
+{
+    use ValidatesRequests, ApiResponse;
+
+    public function grant(Request $request)
+    {
+        try {
+            $inputdata = $request->all();
+            $res       = $this->checkSign($request);
+
+            //获取解密后数据
+            $inputdata['jiemi'] = $res;
+            $this->log          = $this->createLog($request->url(), 'POST', $inputdata, 'grant'); //添加日志
+
+            if (is_string($res)) {
+                return $this->error($res, $this->log);
+            }
+
+            $validator = \Validator::make($res, [
+                'activityId' => 'required',
+                'outletId'   => 'required',
+                'mobile'     => 'required',
+            ], [
+                'activityId.required' => '缺少活动编码',
+                'outletId.required'   => '缺少网点id',
+                'mobile.required'     => '缺少手机号',
+            ]);
+
+            if ($validator->fails()) {
+                return $this->error($validator->errors()->first(), $this->log);
+            }
+
+            $grant = [
+                'requestCode' => $res['activityId'],
+                'tradeId'     => $res['tradeId'],
+                'ticketSum'   => 1,
+                'amount'      => $res['amount'],
+                'random'      => Str::random(6),
+            ];
+
+            $res = Petro::Grant()->setParams($grant)->setMobile($res['mobile'])->start();
+            return $this->success($res, $this->log);
+        } catch (\Exception $exception) {
+            return $this->error($exception->getMessage(), $this->log);
+        }
+    }
+
+    public function query(Request $request)
+    {
+        try {
+            $inputdata = $request->all();
+            $res       = $this->checkSign($request);
+
+            //获取解密后数据
+            $inputdata['jiemi'] = $res;
+            $this->log          = $this->createLog($request->url(), 'POST', $inputdata, 'query'); //添加日志
+
+            if (is_string($res)) {
+                return $this->error($res, $this->log);
+            }
+
+            $validator = \Validator::make($res, [
+                'couponNo' => 'required',
+            ], [
+                'couponNo.required' => '缺少券码',
+            ]);
+
+            if ($validator->fails()) {
+                return $this->error($validator->errors()->first(), $this->log);
+            }
+
+            $res = Petro::Detail()->setParams([
+                'couponNo' => $res['couponNo'],
+                'random'   => Str::random(6),
+            ])->start();
+
+            return $this->success($res, $this->log);
+        } catch (\Exception $exception) {
+            return $this->error($exception->getMessage(), $this->log);
+        }
+    }
+
+    public function destroy(Request $request)
+    {
+        try {
+            $inputdata = $request->all();
+            $res       = $this->checkSign($request);
+
+            //获取解密后数据
+            $inputdata['jiemi'] = $res;
+            $this->log          = $this->createLog($request->url(), 'POST', $inputdata, 'query'); //添加日志
+
+            if (is_string($res)) {
+                return $this->error($res, $this->log);
+            }
+
+            $validator = \Validator::make($res, [
+                'couponNo' => 'required',
+            ], [
+                'couponNo.required' => '缺少券码',
+            ]);
+
+            if ($validator->fails()) {
+                return $this->error($validator->errors()->first(), $this->log);
+            }
+
+            $res = Petro::Invalid()->setParams([
+                'cxcouponNo' => $res['couponNo'],
+                'random'     => Str::random(6),
+            ])->start();
+
+            return $this->success($res, $this->log);
+        } catch (\Exception $exception) {
+            return $this->error($exception->getMessage(), $this->log);
+        }
+    }
+
+
+}

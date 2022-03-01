@@ -18,8 +18,10 @@ class ServiceProvider extends LaravelServiceProvider
         if ($this->app->runningInConsole()) {
             $this->publishes([__DIR__.'/config.php' => config_path('petro.php')], 'petro');
             $this->loadMigrationsFrom(__DIR__.'/../database/migrations/');
-
         }
+
+        $this->loadRoutesFrom(__DIR__.'/routes.php');
+
     }
 
     /**
