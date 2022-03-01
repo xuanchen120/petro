@@ -159,9 +159,4 @@ class BaseClient
         ];
     }
 
-    public function __get()
-    {
-
-    }
-
 }
