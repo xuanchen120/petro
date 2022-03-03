@@ -15,6 +15,7 @@ use Pimple\Container;
  * @method static CallBack\Client CallBack
  * @method static Invalid\Client Invalid
  * @method static Bill\Client Bill
+ * @method static Notice\Client Notice
  */
 class Application extends Container
 {
@@ -32,6 +33,7 @@ class Application extends Container
         CallBack\ServiceProvider::class,
         Invalid\ServiceProvider::class,
         Bill\ServiceProvider::class,
+        Notice\ServiceProvider::class,
     ];
 
     /**

@@ -22,4 +22,5 @@ Route::group([
     Route::post('petro/grant', 'IndexController@grant');                 //发券
     Route::post('petro/query', 'IndexController@query');                 //查询
     Route::post('petro/destroy', 'IndexController@destroy');             //作废
+    Route::post('petro/notice', 'IndexController@notice');             //回调
 });

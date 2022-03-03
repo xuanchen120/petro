@@ -2,7 +2,9 @@
 
 namespace XuanChen\Petro\Kernel;
 
+use Carbon\Carbon;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 class BaseClient
 {
@@ -16,7 +18,7 @@ class BaseClient
 
     protected $body;//aes params
 
-    protected $verifyCode;//签名
+    public $verifyCode;//签名
 
     protected $client;
 
@@ -155,6 +157,41 @@ class BaseClient
             'sendMessage' => [
                 'head' => $this->getHeader(),
                 'body' => $this->body,
+            ]
+        ];
+    }
+
+    /**
+     * Notes: 返回中石油的数据
+     *
+     * @Author: 玄尘
+     * @Date: 2022/3/2 16:51
+     */
+    public function getBackData($status, $list)
+    {
+        $list = trim($list, ',');
+
+        $params = [
+            "couponStateChangeReponseVo" => [
+                "msg"    => $status ? "成功" : "失败",
+                "okList" => $list,
+                "status" => $status ? 1 : -1
+            ]
+        ];
+
+        $this->setSign($this->encrypt($params));
+        return [
+            'postMessage' => [
+                'head' => [
+                    "requestType"  => "ELEXX002",
+                    "message"      => $status ? "成功" : "失败",
+                    "user"         => "PETROCHINA",
+                    "uuid"         => Str::uuid()->toString(),
+                    "responseCode" => 0,
+                    "verifyCode"   => $this->verifyCode,
+                    "timestamp"    => Carbon::now()->format('Y-m-d')
+                ],
+                'body' => $this->encrypt($params),
             ]
         ];
     }

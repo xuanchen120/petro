@@ -22,7 +22,8 @@ class Client extends BaseClient
     public function start()
     {
         try {
-            $this->truthfulData = $this->inData['postMessage']['truthfulData'] = $this->decrypt($this->inData['postMessage']['body']);
+            $type               = isset($this->inData['postMessage']) ? 'postMessage' : 'sendMessage';
+            $this->truthfulData = $this->inData[$type]['truthfulData'] = $this->decrypt($this->inData[$type]['body']);
             return $this;
         } catch (\Exception $e) {
             throw new PetroException($e->getMessage());

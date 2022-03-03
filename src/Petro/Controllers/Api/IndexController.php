@@ -126,5 +126,36 @@ class IndexController
         }
     }
 
+    /**
+     * Notes: description
+     *
+     * @Author: 玄尘
+     * @Date: 2022/3/2 11:21
+     */
+    public function notice(Request $request)
+    {
+        try {
+            $data      = $request->all();
+            $validator = \Validator::make($data, [
+                'sendMessage' => 'required',
+            ], [
+                'sendMessage.required' => '缺少参数',
+            ]);
+
+
+            $this->log = $this->createLog($request->url(), 'POST', $data, 'query'); //添加日志
+            if ($validator->fails()) {
+                return $this->error($validator->errors()->first(), $this->log);
+            }
+
+            $res = Petro::Notice()->setParams($data)->start();
+
+            $this->updateLog($this->log, $res); //更新日志
+            return response()->json($res);
+        } catch (\Exception $exception) {
+            return $this->error($exception->getMessage(), $this->log);
+        }
+    }
+
 
 }

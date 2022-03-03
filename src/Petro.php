@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static Petro\CallBack\Client CallBack
  * @method static Petro\Invalid\Client Invalid
  * @method static Petro\Bill\Client Bill
+ * @method static Petro\Notice\Client Notice
  */
 class Petro extends Facade
 {
