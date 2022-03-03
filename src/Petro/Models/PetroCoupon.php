@@ -23,4 +23,8 @@ class PetroCoupon extends Model
         self::STATUS_REPEAL => '撤销',
         self::STATUS_LOSE   => '失效',
     ];
+
+    public $casts = [
+        'goodsInfo' => 'json'
+    ];
 }
