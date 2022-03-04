@@ -21,4 +21,6 @@ return [
      * 单个电子券秘钥
      */
     'couponKey'     => env('PETRO_COUPON_KEY', ''),
+
+    'ysd_notice_url' => 'https://lifetest.ysd-bs.com/api/store/callback',
 ];

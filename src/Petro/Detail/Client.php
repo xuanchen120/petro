@@ -6,7 +6,7 @@ use Exception;
 use GuzzleHttp\Client as Guzzle;
 use XuanChen\Petro\Exceptions\PetroException;
 use XuanChen\Petro\Kernel\BaseClient;
-use XuanChen\Petro\Models\PetroCoupon;
+use XuanChen\Petro\Kernel\Models\PetroCoupon;
 
 class Client extends BaseClient
 {
@@ -26,7 +26,7 @@ class Client extends BaseClient
                 'in_source'  => $this->app->client->postData,
                 'out_source' => $this->app->callback->inData
             ])->start();
-            
+
             return $this->app->callback->truthfulData;
 
         } catch (\Exception $e) {

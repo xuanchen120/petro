@@ -5,7 +5,7 @@ namespace XuanChen\Petro\Log;
 use Exception;
 use Illuminate\Support\Arr;
 use XuanChen\Petro\Exceptions\PetroException;
-use XuanChen\Petro\Models\PetroLog;
+use XuanChen\Petro\Kernel\Models\PetroLog;
 
 class Client
 {

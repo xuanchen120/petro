@@ -4,19 +4,15 @@ namespace XuanChen\Petro\Notice;
 
 use Carbon\Carbon;
 use Exception;
-use GuzzleHttp\Client as Guzzle;
-use Illuminate\Support\Str;
-use XuanChen\Petro;
 use XuanChen\Petro\Kernel\BaseClient;
-use XuanChen\Petro\Models\PetroCoupon;
+use XuanChen\Petro\Kernel\Models\PetroCoupon;
 use XuanChen\Petro\Exceptions\PetroException;
+use XuanChen\Petro\Kernel\Event\CouponNotice;
 
 class Client extends BaseClient
 {
 
     public $coupon_list;
-    public $back_params;
-    public $back_body;
 
     /**
      * Notes: 开始执行
@@ -42,15 +38,19 @@ class Client extends BaseClient
             $couponList = $data['couponStateChangeRequestVo']['couponList'];
 
             foreach ($couponList as $couponInfo) {
-                PetroCoupon::query()->where('couponNo', $couponInfo['couponNo'])->update([
-                    'useTime'     => Carbon::parse($couponInfo['useTime']),
-                    'status'      => $couponInfo['status'],
-                    'stationName' => $couponInfo['stationName'],
-                    'stationCode' => $couponInfo['stationCode'],
-                    'goodsInfo'   => $couponInfo['goodsInfo'],
-                ]);
+                $coupon = PetroCoupon::query()->where('couponNo', $couponInfo['couponNo'])->first();
+                if ($coupon) {
+                    $coupon->update([
+                        'useTime'     => Carbon::parse($couponInfo['useTime']),
+                        'status'      => $couponInfo['status'],
+                        'stationName' => $couponInfo['stationName'],
+                        'stationCode' => $couponInfo['stationCode'],
+                        'goodsInfo'   => $couponInfo['goodsInfo'],
+                    ]);
+                }
 
                 $this->coupon_list .= ','.$couponInfo['couponNo'];
+                event(new CouponNotice($coupon));//通知
             }
 
             $backData = $this->getBackData(true, $this->coupon_list);

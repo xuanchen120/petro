@@ -6,7 +6,7 @@ use App\Models\User;
 use Auth;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Grid;
-use XuanChen\Petro\Models\PetroLog;
+use XuanChen\Petro\Kernel\Models\PetroLog;
 
 class LogController extends AdminController
 {

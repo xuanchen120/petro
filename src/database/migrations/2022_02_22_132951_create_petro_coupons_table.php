@@ -19,6 +19,8 @@ class CreatePetroCouponsTable extends Migration
             $table->string('mobile');
             $table->string('name')->comment('电子券名称');
             $table->string('amount')->comment('面额');
+            $table->string('couponNo')->comment('电子券编号');
+            $table->tinyInteger('status')->default(2);
             $table->string('requestCode')->comment('电子券请求码');
             $table->string('limitAmount')->comment('便利店金额限制');
             $table->string('oillimitAmount')->comment('油品金额限制');
@@ -32,8 +34,11 @@ class CreatePetroCouponsTable extends Migration
             $table->string('glCatName')->comment('商品');
             $table->string('oilgCatName')->comment('油品大类');
             $table->string('oilglCatName')->comment('油品小类');
-            $table->string('couponNo')->comment('电子券编号');
-            $table->tinyInteger('status')->default(2);
+            $table->string('stationName')->comment('核销站点名称');
+            $table->string('stationCode')->comment('核销站点编');
+            $table->decimal('realAmount')->comment('实际支付金额');
+            $table->json('goodsInfo')->comment('使用的商品数据');
+            $table->dateTime('useTime')->comment('核销时间');
             $table->timestamps();
         });
     }

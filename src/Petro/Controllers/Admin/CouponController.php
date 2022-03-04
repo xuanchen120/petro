@@ -5,7 +5,7 @@ namespace XuanChen\Petro\Controllers\Admin;
 use Auth;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Grid;
-use XuanChen\Petro\Models\PetroCoupon;
+use XuanChen\Petro\Kernel\Models\PetroCoupon;
 
 class CouponController extends AdminController
 {

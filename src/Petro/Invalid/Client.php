@@ -3,11 +3,9 @@
 namespace XuanChen\Petro\Invalid;
 
 use Exception;
-use GuzzleHttp\Client as Guzzle;
-use XuanChen\Petro;
 use XuanChen\Petro\Exceptions\PetroException;
 use XuanChen\Petro\Kernel\BaseClient;
-use XuanChen\Petro\Models\PetroCoupon;
+use XuanChen\Petro\Kernel\Models\PetroCoupon;
 
 class Client extends BaseClient
 {

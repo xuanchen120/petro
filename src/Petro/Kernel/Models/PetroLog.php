@@ -1,6 +1,6 @@
 <?php
 
-namespace XuanChen\Petro\Models;
+namespace XuanChen\Petro\Kernel\Models;
 
 use App\Models\Model;
 
