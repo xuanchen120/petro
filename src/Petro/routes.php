@@ -23,4 +23,5 @@ Route::group([
     Route::post('petro/query', 'IndexController@query');                 //查询
     Route::post('petro/destroy', 'IndexController@destroy');             //作废
     Route::post('petro/notice', 'IndexController@notice');             //回调
+    Route::post('petro/dyanmic', 'IndexController@checkCode');             //动态码
 });

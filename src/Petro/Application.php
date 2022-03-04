@@ -16,6 +16,7 @@ use Pimple\Container;
  * @method static Invalid\Client Invalid
  * @method static Bill\Client Bill
  * @method static Notice\Client Notice
+ * @method static Check\Client Check
  */
 class Application extends Container
 {
@@ -34,6 +35,7 @@ class Application extends Container
         Invalid\ServiceProvider::class,
         Bill\ServiceProvider::class,
         Notice\ServiceProvider::class,
+        Check\ServiceProvider::class,
     ];
 
     /**

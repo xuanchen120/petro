@@ -157,5 +157,47 @@ class IndexController
         }
     }
 
+    /**
+     * Notes: 获取动态码
+     *
+     * @Author: 玄尘
+     * @Date: 2022/3/4 13:31
+     * @param  Request  $request
+     */
+    public function checkCode(Request $request)
+    {
+        try {
+            $inputdata = $request->all();
+            $res       = $this->checkSign($request);
+
+            //获取解密后数据
+            $inputdata['jiemi'] = $res;
+            $this->log          = $this->createLog($request->url(), 'POST', $inputdata, 'query'); //添加日志
+
+            if (is_string($res)) {
+                return $this->error($res, $this->log);
+            }
+
+            $validator = \Validator::make($res, [
+                'couponNo' => 'required',
+            ], [
+                'couponNo.required' => '缺少券码',
+            ]);
+
+            if ($validator->fails()) {
+                return $this->error($validator->errors()->first(), $this->log);
+            }
+
+            $code = Petro::Check()->setParams([
+                'ticketNum' => $res['couponNo'],
+                'random'    => Str::random(6),
+            ])->start();
+
+            return $this->success($code, $this->log);
+        } catch (\Exception $exception) {
+            return $this->error($exception->getMessage(), $this->log);
+        }
+    }
+
 
 }
